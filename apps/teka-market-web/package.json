@@ -1,6 +1,6 @@
 {
-  "name": "b2c-storefront",
-  "version": "1.5.4",
+  "name": "@teka/web",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
