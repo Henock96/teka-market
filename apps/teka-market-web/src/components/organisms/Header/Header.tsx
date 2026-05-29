@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { HttpTypes } from "@medusajs/types"
 
 import { CartDropdown, MobileNavbar, Navbar } from "@/components/cells"
@@ -47,14 +46,8 @@ export const Header = async ({ locale } : {
           />
         </div>
         <div className="flex lg:justify-center lg:w-1/3 items-center pl-4 lg:pl-0">
-          <LocalizedClientLink href="/" className="text-2xl font-bold" data-testid="header-logo-link">
-            <Image
-              src="/Logo.svg"
-              width={126}
-              height={40}
-              alt="Logo"
-              priority
-            />
+          <LocalizedClientLink href="/" className="text-2xl font-bold tracking-tight" data-testid="header-logo-link">
+            TEKA·MARKET
           </LocalizedClientLink>
         </div>
         <div className="flex items-center justify-end gap-2 lg:gap-4 w-full lg:w-1/3 py-2" data-testid="header-actions">

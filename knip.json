@@ -1,0 +1,18 @@
+{
+  "$schema": "https://unpkg.com/knip/schema.json",
+  "workspaces": {
+    "apps/teka-market-web": {
+      "entry": [
+        "src/app/**/{page,layout,route,loading,error,not-found,global-error}.tsx",
+        "src/middleware.ts",
+        "next.config.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}"],
+      "ignoreDependencies": [
+        "@chromatic-com/storybook",
+        "prettier-plugin-tailwindcss",
+        "next-intl"
+      ]
+    }
+  }
+}

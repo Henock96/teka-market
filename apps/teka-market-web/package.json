@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.1",
@@ -15,13 +17,9 @@
     "@medusajs/ui": "^4.0.33",
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.1.0",
-    "@types/js-cookie": "^3.0.6",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.5.2",
-    "i18next": "^25.2.1",
-    "i18next-browser-languagedetector": "^8.1.0",
-    "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "next": "15.5.9",
     "next-intl": "^3.26.3",
@@ -29,9 +27,7 @@
     "react-country-flag": "^3.1.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
-    "react-i18next": "^15.5.2",
     "tailwind-merge": "^2.6.0",
-    "uuid": "^11.0.5",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -49,6 +45,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^4.1.7",
     "eslint": "^9",
     "eslint-config-next": "15.5.7",
     "eslint-plugin-storybook": "^0.11.2",
@@ -58,7 +55,8 @@
     "storybook": "^8.4.7",
     "storybook-next-intl": "^1.2.4",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.7"
   },
   "eslintConfig": {
     "extends": [
