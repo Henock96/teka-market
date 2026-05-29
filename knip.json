@@ -10,7 +10,8 @@
       "project": ["src/**/*.{ts,tsx}"],
       "ignoreDependencies": [
         "@chromatic-com/storybook",
-        "prettier-plugin-tailwindcss"
+        "prettier-plugin-tailwindcss",
+        "next-intl"
       ]
     }
   }
