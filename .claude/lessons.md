@@ -33,3 +33,27 @@ This was added to `packages/api/jest.config.js` in commit ec0b3c8.
 ### createTaxRegionsWorkflow input is a direct array
 The workflow signature is `createTaxRegionsWorkflow(container).run({ input: CreateTaxRegionDTO[] })`.
 Pass the array directly — there is no wrapper object. `provider_id` and `default_tax_rate` are valid fields on `CreateTaxRegionDTO`.
+
+### RBAC: new admin users have NO permissions by default
+With `featureFlags.rbac: true` in `medusa-config.ts`, every `/admin/*` route requires the user to be linked to a role. The `create-super-admin-role` migration only assigns the role to users that already existed at migration time — new users created afterwards stay unauthorized.
+Fix in the seed: after `createUserAccountWorkflow`, manually link the user to `role_super_admin`:
+```ts
+await link.create({
+  [Modules.USER]: { user_id: userId },
+  [Modules.RBAC]: { rbac_role_id: "role_super_admin" }
+})
+```
+Symptom: login HTTP 200, but every `/admin/*` returns 403 Forbidden. Fixed in commit ab6c8ae.
+
+### JWT sessions default to 1 day (annoying in dev)
+Medusa default: `http.jwtExpiresIn = "1d"` — re-login required every 24h. In `medusa-config.ts`, read from env:
+```ts
+jwtExpiresIn: process.env.JWT_EXPIRES_IN || "30d"
+```
+`.env.template` defaults to `JWT_EXPIRES_IN=30d` for dev. In prod, drop to "1d" + implement a refresh-token flow.
+
+### Mercur seller `currency_code` is required
+`createSellerAccountWorkflow` from `@mercurjs/core/workflows` requires `seller.currency_code` (e.g. `"xaf"`). Without it, you get `ValidationError: Value for Seller.currency_code is required, 'undefined' found`. Import path is `@mercurjs/core/workflows` (no types entry but resolves at runtime; build works fine).
+
+### Medusa creates the default Store at first `medusa exec` (not during migrations)
+After `db:migrate` there are still 0 stores. The default "Medusa Store" is auto-created by the framework boot inside `medusa exec` / `medusa develop`. Our seed renames it to "Teka-Market" if needed, and creates one from scratch via `createStoresWorkflow` as a safety fallback.

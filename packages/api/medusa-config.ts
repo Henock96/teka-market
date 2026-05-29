@@ -28,6 +28,10 @@ module.exports = defineConfig({
       vendorCors: process.env.VENDOR_CORS!,
       jwtSecret: process.env.JWT_SECRET || "supersecret",
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
+      // Durée de validité des JWT (default Medusa = "1d"). Configurable pour
+      // éviter de re-loguer toutes les 24h en dev. En prod : garder "1d" ou
+      // s'appuyer sur un refresh-token flow.
+      jwtExpiresIn: process.env.JWT_EXPIRES_IN || "30d",
     }
   },
   featureFlags: {

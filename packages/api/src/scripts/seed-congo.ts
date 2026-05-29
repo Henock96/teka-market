@@ -481,7 +481,7 @@ export default async function seedCongo({ container }: ExecArgs) {
   }
 
   // ============================================================
-  // 13. Admin user
+  // 13. Admin user + Super Admin role assignment
   // ============================================================
   const { data: existingAdminUsers } = await query.graph({
     entity: "user",
@@ -489,7 +489,11 @@ export default async function seedCongo({ container }: ExecArgs) {
     filters: { email: ADMIN_EMAIL },
   })
 
-  if (!existingAdminUsers.length) {
+  let adminUserId: string | undefined = existingAdminUsers[0]?.id as
+    | string
+    | undefined
+
+  if (!adminUserId) {
     const authModule = container.resolve(Modules.AUTH)
     const { authIdentity } = await authModule.register("emailpass", {
       body: { email: ADMIN_EMAIL, password: ADMIN_PASSWORD },
@@ -499,7 +503,7 @@ export default async function seedCongo({ container }: ExecArgs) {
       throw new Error("Failed to register admin auth identity")
     }
 
-    await createUserAccountWorkflow(container).run({
+    const { result: createdUsers } = await createUserAccountWorkflow(container).run({
       input: {
         authIdentityId: (authIdentity as { id: string }).id,
         userData: {
@@ -509,9 +513,37 @@ export default async function seedCongo({ container }: ExecArgs) {
         },
       },
     })
+    const createdAdmin = createdUsers as unknown as
+      | { id: string }
+      | { id: string }[]
+    adminUserId = Array.isArray(createdAdmin)
+      ? createdAdmin[0]?.id
+      : createdAdmin.id
     logger.info(`  ✓ Admin user "${ADMIN_EMAIL}" created`)
   } else {
     logger.info(`  ✓ Admin user "${ADMIN_EMAIL}" already exists, skipped`)
+  }
+
+  // 13.b — Assigner le rôle Super Admin (sinon toutes les routes /admin/* renvoient 403
+  // car RBAC est activé via featureFlags.rbac=true dans medusa-config.ts).
+  // Pattern copié de la migration officielle Medusa create-super-admin-role.js.
+  if (adminUserId) {
+    try {
+      await link.create({
+        [Modules.USER]: { user_id: adminUserId },
+        [Modules.RBAC]: { rbac_role_id: "role_super_admin" },
+      })
+      logger.info("  ✓ Super Admin role assigned to admin user")
+    } catch (error: unknown) {
+      if (
+        error instanceof Error &&
+        (error.message.includes("already") || error.message.includes("duplicate"))
+      ) {
+        logger.info("  ✓ Super Admin role already assigned, skipped")
+      } else {
+        throw error
+      }
+    }
   }
 
   // ============================================================
