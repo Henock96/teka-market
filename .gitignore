@@ -42,3 +42,9 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+# Storefront placeholder images (large binaries — replace with actual Teka-Market assets)
+apps/teka-market-web/public/images/
+
+# Mercur codegen output (generated, not committed)
+.mercur/
