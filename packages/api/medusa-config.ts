@@ -1,3 +1,17 @@
+/**
+ * Teka-Market — Medusa configuration
+ *
+ * Convention locale (Congo-Brazzaville) :
+ *   - Devise par défaut : XAF (entier, 0 décimale, ISO 4217)
+ *   - Locale : fr-FR
+ *   - Timezone : Africa/Brazzaville (injectée via process.env.TZ)
+ *   - TVA : 18.9% (configurée dans Tax Module via seed-congo.ts)
+ *
+ * La région, currency, tax et sales channel sont créés via :
+ *   bun run medusa exec ./src/scripts/seed-congo.ts
+ *
+ * Spec : docs/superpowers/specs/2026-05-29-teka-market-vague-1-design.md
+ */
 import { loadEnv, defineConfig } from '@medusajs/framework/utils'
 import { DashboardModuleOptions } from '@mercurjs/types'
 import path from 'path'
@@ -14,6 +28,10 @@ module.exports = defineConfig({
       vendorCors: process.env.VENDOR_CORS!,
       jwtSecret: process.env.JWT_SECRET || "supersecret",
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
+      // Durée de validité des JWT (default Medusa = "1d"). Configurable pour
+      // éviter de re-loguer toutes les 24h en dev. En prod : garder "1d" ou
+      // s'appuyer sur un refresh-token flow.
+      jwtExpiresIn: process.env.JWT_EXPIRES_IN || "30d",
     }
   },
   featureFlags: {
