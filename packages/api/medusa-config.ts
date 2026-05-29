@@ -1,3 +1,17 @@
+/**
+ * Teka-Market — Medusa configuration
+ *
+ * Convention locale (Congo-Brazzaville) :
+ *   - Devise par défaut : XAF (entier, 0 décimale, ISO 4217)
+ *   - Locale : fr-FR
+ *   - Timezone : Africa/Brazzaville (injectée via process.env.TZ)
+ *   - TVA : 18.9% (configurée dans Tax Module via seed-congo.ts)
+ *
+ * La région, currency, tax et sales channel sont créés via :
+ *   bun run medusa exec ./src/scripts/seed-congo.ts
+ *
+ * Spec : docs/superpowers/specs/2026-05-29-teka-market-vague-1-design.md
+ */
 import { loadEnv, defineConfig } from '@medusajs/framework/utils'
 import { DashboardModuleOptions } from '@mercurjs/types'
 import path from 'path'
