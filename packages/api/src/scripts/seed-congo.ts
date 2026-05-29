@@ -9,6 +9,7 @@ import {
   createRegionsWorkflow,
   createSalesChannelsWorkflow,
   createStockLocationsWorkflow,
+  createStoresWorkflow,
   createTaxRegionsWorkflow,
   updateStoresWorkflow,
 } from "@medusajs/medusa/core-flows"
@@ -49,18 +50,43 @@ export default async function seedCongo({ container }: ExecArgs) {
   logger.info("Seeding Teka-Market — Congo locale...")
 
   // 1. Currency XAF — ajoutée via updateStoresWorkflow (pas de createCurrenciesWorkflow en v2)
-  const storeModule = container.resolve(Modules.STORE)
-  const [store] = await storeModule.listStores()
+  // On utilise query.graph pour récupérer le store AVEC ses supported_currencies
+  // (storeModule.listStores() ne retourne pas la relation par défaut).
+  const { data: existingStores } = await query.graph({
+    entity: "store",
+    fields: ["id", "name", "supported_currencies.currency_code", "supported_currencies.is_default"],
+  })
+  let store = existingStores[0] as
+    | { id: string; name: string; supported_currencies: { currency_code: string; is_default: boolean }[] }
+    | undefined
 
+  // 1a. Créer le Store par défaut s'il n'existe pas (Medusa migrations ne le créent pas
+  // dans toutes les configurations — Medusa CLI peut le créer au bootstrap, mais pas toujours).
   if (!store) {
-    logger.warn("  ! No store found, skipping currency seed")
+    const { result: createdStores } = await createStoresWorkflow(container).run({
+      input: {
+        stores: [
+          {
+            name: "Teka-Market",
+            supported_currencies: [
+              { currency_code: "xaf", is_default: true },
+            ],
+          },
+        ],
+      },
+    })
+    store = createdStores[0] as unknown as typeof store
+    logger.info("  Store Teka-Market created with xaf as default currency")
   } else {
     const existingCurrencyCodes =
-      store.supported_currencies?.map((c: { currency_code: string }) => c.currency_code) ?? []
+      store.supported_currencies?.map((c) => c.currency_code) ?? []
 
     if (!existingCurrencyCodes.includes("xaf")) {
       const updatedCurrencies = [
-        ...existingCurrencyCodes.map((code: string) => ({ currency_code: code })),
+        ...store.supported_currencies.map((c) => ({
+          currency_code: c.currency_code,
+          is_default: c.is_default,
+        })),
         { currency_code: "xaf", is_default: existingCurrencyCodes.length === 0 },
       ]
 
@@ -72,9 +98,9 @@ export default async function seedCongo({ container }: ExecArgs) {
           },
         },
       })
-      logger.info("  Currency xaf created")
+      logger.info("  Currency xaf added to store supported_currencies")
     } else {
-      logger.info("  Currency xaf already exists, skipped")
+      logger.info("  Currency xaf already exists in store, skipped")
     }
   }
 
