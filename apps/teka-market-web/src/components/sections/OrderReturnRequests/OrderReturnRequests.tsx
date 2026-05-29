@@ -7,13 +7,11 @@ const LIMIT = 10
 
 export const OrderReturnRequests = ({
   returns = [],
-  user,
   page,
   currentReturn,
   returnReasons,
 }: {
   returns: any[]
-  user: any
   page: string
   currentReturn: string
   returnReasons: any[]
@@ -45,7 +43,6 @@ export const OrderReturnRequests = ({
         <SingleOrderReturn
           key={item.id}
           item={item}
-          user={user}
           defaultOpen={currentReturn === item.id}
           returnReason={returnReasons}
           priceTestId={`return-${item.id}-price`}

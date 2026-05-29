@@ -1,12 +1,10 @@
 "use client"
 import {
-  Badge,
   Card,
   Divider,
   LogoutButton,
   NavigationItem,
 } from "@/components/atoms"
-import { useUnreads } from "@talkjs/react"
 import { usePathname } from "next/navigation"
 
 const navigationItems = [
@@ -37,7 +35,6 @@ const navigationItems = [
 ]
 
 export const UserNavigation = () => {
-  const unreads = useUnreads()
   const path = usePathname()
 
   return (
@@ -50,11 +47,6 @@ export const UserNavigation = () => {
           className="relative"
         >
           {item.label}
-          {item.label === "Messages" && Boolean(unreads?.length) && (
-            <Badge className="absolute top-3 left-24 w-4 h-4 p-0">
-              {unreads?.length}
-            </Badge>
-          )}
         </NavigationItem>
       ))}
       <Divider className="my-2" />

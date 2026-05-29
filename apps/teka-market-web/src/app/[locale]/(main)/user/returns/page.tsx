@@ -1,6 +1,5 @@
 import { UserNavigation } from '@/components/molecules/UserNavigation/UserNavigation';
 import { OrderReturnRequests } from '@/components/sections/OrderReturnRequests/OrderReturnRequests';
-import { retrieveCustomer } from '@/lib/data/customer';
 import { getReturns, retrieveReturnReasons } from '@/lib/data/orders';
 
 export default async function ReturnsPage({
@@ -10,8 +9,6 @@ export default async function ReturnsPage({
 }) {
   const { order_return_requests } = await getReturns();
   const returnReasons = await retrieveReturnReasons();
-
-  const user = await retrieveCustomer();
 
   const { page, return: returnId } = await searchParams;
 
@@ -27,7 +24,6 @@ export default async function ReturnsPage({
                 new Date(b.line_items[0].created_at).getTime() -
                 new Date(a.line_items[0].created_at).getTime()
             )}
-            user={user}
             page={page}
             currentReturn={returnId || ''}
             returnReasons={returnReasons}

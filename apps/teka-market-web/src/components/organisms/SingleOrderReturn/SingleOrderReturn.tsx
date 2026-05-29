@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils"
 import { Heading } from "@medusajs/ui"
 import { format } from "date-fns"
 import { useEffect, useRef, useState } from "react"
-import { Chat } from "../Chat/Chat"
 import Image from "next/image"
 import { convertToLocale } from "@/lib/helpers/money"
 import { StepProgressBar } from "@/components/cells/StepProgressBar/StepProgressBar"
@@ -15,14 +14,12 @@ const steps = ["pending", "processing", "sent"]
 
 export const SingleOrderReturn = ({
   item,
-  user,
   defaultOpen,
   returnReason,
   priceTestId,
   testIdPrefix,
 }: {
   item: any
-  user: any
   defaultOpen: boolean
   returnReason: any[]
   priceTestId?: string
@@ -113,16 +110,10 @@ export const SingleOrderReturn = ({
           <div className="p-4 flex justify-between">
             <div className="flex items-center gap-2">
               <Avatar
-                src={item.order.seller.photo || "/talkjs-placeholder.jpg"}
+                src={item.order.seller.photo || "/seller-placeholder.jpg"}
               />
               <p className="label-lg text-primary" data-testid={testIdPrefix ? `${testIdPrefix}-seller-name` : undefined}>{item.order.seller.name}</p>
             </div>
-            <Chat
-              user={user}
-              seller={item.order.seller}
-              buttonClassNames="uppercase"
-              order_id={item.order.id}
-            />
           </div>
           <Divider />
           <div className="p-4 flex justify-between w-full">

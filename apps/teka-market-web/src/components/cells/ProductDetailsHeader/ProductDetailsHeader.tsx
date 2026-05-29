@@ -5,7 +5,6 @@ import { HttpTypes } from "@medusajs/types"
 import { ProductVariants } from "@/components/molecules"
 import useGetAllSearchParams from "@/hooks/useGetAllSearchParams"
 import { getProductPrice } from "@/lib/helpers/get-product-price"
-import { Chat } from "@/components/organisms/Chat/Chat"
 import { SellerProps } from "@/types/seller"
 import { WishlistButton } from "../WishlistButton/WishlistButton"
 import { Wishlist } from "@/types/wishlist"
@@ -178,16 +177,6 @@ export const ProductDetailsHeader = ({
           ? "ADD TO CART"
           : "OUT OF STOCK"}
       </Button>
-      {/* Seller message */}
-
-      {user && product.seller && (
-        <Chat
-          user={user}
-          seller={product.seller}
-          buttonClassNames="w-full uppercase"
-          product={product}
-        />
-      )}
     </div>
   )
 }

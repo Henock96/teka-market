@@ -8,7 +8,6 @@ import { Wishlist } from "@/types/wishlist"
 import { Badge } from "@/components/atoms"
 import CountrySelector from "@/components/molecules/CountrySelector/CountrySelector"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
-import { MessageButton } from "@/components/molecules/MessageButton/MessageButton"
 import { listCategories } from "@/lib/data/categories"
 import { listRegions } from "@/lib/data/regions"
 import { getUserWishlists } from "@/lib/data/wishlist"
@@ -60,7 +59,6 @@ export const Header = async ({ locale } : {
         </div>
         <div className="flex items-center justify-end gap-2 lg:gap-4 w-full lg:w-1/3 py-2" data-testid="header-actions">
           <CountrySelector regions={regions} />
-          {isLoggedIn && <MessageButton />}
           <UserDropdown isLoggedIn={isLoggedIn} />
           {isLoggedIn && (
             <LocalizedClientLink href="/user/wishlist" className="relative" data-testid="header-wishlist-link">

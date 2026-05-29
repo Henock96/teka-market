@@ -1,6 +1,5 @@
 import { LoginForm } from "@/components/molecules/LoginForm/LoginForm"
 import { UserNavigation } from "@/components/molecules/UserNavigation/UserNavigation"
-import { UserMessagesSection } from "@/components/sections/UserMessagesSection/UserMessagesSection"
 import { retrieveCustomer } from "@/lib/data/customer"
 
 export default async function MessagesPage() {
@@ -13,7 +12,8 @@ export default async function MessagesPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 mt-6 gap-5 md:gap-8">
         <UserNavigation />
         <div className="md:col-span-3 space-y-8">
-          <UserMessagesSection />
+          <h1 className="heading-md uppercase">Messages</h1>
+          <p className="text-secondary">La messagerie sera disponible prochainement.</p>
         </div>
       </div>
     </main>
