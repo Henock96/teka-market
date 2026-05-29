@@ -1,0 +1,115 @@
+{
+  "common": {
+    "cta": {
+      "addToCart": "Ajouter au panier",
+      "viewSeller": "Voir le vendeur",
+      "discover": "Découvrir",
+      "continueShopping": "Continuer mes achats",
+      "reload": "Recharger",
+      "backHome": "Retour à l'accueil"
+    },
+    "currency": {
+      "free": "Gratuit",
+      "unavailable": "—"
+    },
+    "loading": "Chargement…"
+  },
+  "navbar": {
+    "search": "Rechercher",
+    "account": "Mon compte",
+    "cart": "Panier",
+    "menu": "Menu"
+  },
+  "footer": {
+    "tagline": "Marketplace nationale Congo-Brazzaville",
+    "copyright": "© {year} Teka-Market",
+    "payments": {
+      "label": "Paiements acceptés",
+      "momo": "MoMo",
+      "airtel": "Airtel Money"
+    },
+    "legal": {
+      "cgu": "Conditions d'utilisation",
+      "cgv": "Conditions de vente",
+      "mentions": "Mentions légales"
+    }
+  },
+  "home": {
+    "hero": {
+      "kicker": "— Marketplace nationale",
+      "title": "Le Congo qui vend.",
+      "paragraph": "Des centaines de vendeurs locaux, livraison à Brazzaville et au-delà. Paiement MoMo et Airtel.",
+      "cta": "Découvrir"
+    },
+    "trust": {
+      "delivery": "Livraison locale",
+      "momo": "MoMo",
+      "airtel": "Airtel"
+    }
+  },
+  "product": {
+    "stockStatus": {
+      "inStock": "En stock",
+      "lowStock": "Plus que {count} en stock",
+      "outOfStock": "Rupture de stock"
+    },
+    "deliveryInfo": "Livré depuis Brazzaville sous 24-48h"
+  },
+  "cart": {
+    "title": "Mon panier",
+    "empty": {
+      "title": "Votre panier est vide.",
+      "cta": "Voir les produits"
+    },
+    "summary": {
+      "subtotal": "Sous-total",
+      "shipping": "Livraison",
+      "tax": "TVA",
+      "total": "Total"
+    }
+  },
+  "auth": {
+    "signin": {
+      "kicker": "— Bienvenue",
+      "title": "Se connecter",
+      "email": "Adresse e-mail",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "noAccount": "Pas encore de compte ?",
+      "createAccount": "Créer un compte",
+      "forgotPassword": "Mot de passe oublié ?"
+    },
+    "signup": {
+      "title": "Créer un compte Teka-Market",
+      "submit": "Créer mon compte"
+    },
+    "reset": {
+      "title": "Mot de passe oublié ?",
+      "submit": "Réinitialiser"
+    }
+  },
+  "account": {
+    "title": "Mon compte",
+    "sections": {
+      "orders": "Mes commandes",
+      "addresses": "Mes adresses",
+      "payments": "Mes paiements MoMo / Airtel",
+      "profile": "Mon profil",
+      "signout": "Se déconnecter"
+    },
+    "paymentsNote": "Les paiements MoMo et Airtel arrivent prochainement."
+  },
+  "errors": {
+    "notFound": {
+      "title": "Cette page n'existe pas.",
+      "subtitle": "Le lien est peut-être obsolète."
+    },
+    "generic": {
+      "title": "Une erreur s'est produite.",
+      "subtitle": "Quelque chose n'a pas fonctionné. Réessaie."
+    }
+  },
+  "legal": {
+    "comingSoon": "Cette page sera disponible à la Vague 3."
+  }
+}
