@@ -12,6 +12,7 @@ import Script from "next/script"
 import { getRegion, listRegions } from "@/lib/data/regions"
 import { listProducts } from "@/lib/data/products"
 import { toHreflang } from "@/lib/helpers/hreflang"
+import { isSearchEnabled } from "@/lib/search-client"
 
 export const revalidate = 60
 
@@ -75,9 +76,6 @@ export async function generateMetadata({
     },
   }
 }
-
-const ALGOLIA_ID = process.env.NEXT_PUBLIC_ALGOLIA_ID
-const ALGOLIA_SEARCH_KEY = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
 
 async function Category({
   params,
@@ -163,7 +161,7 @@ async function Category({
       <h1 className="heading-xl uppercase">{category.name}</h1>
 
       <Suspense fallback={<div data-testid="category-page-loading"><ProductListingSkeleton /></div>}>
-        {bot || !ALGOLIA_ID || !ALGOLIA_SEARCH_KEY ? (
+        {bot || !isSearchEnabled ? (
           <ProductListing category_id={category.id} showSidebar locale={locale} />
         ) : (
           <AlgoliaProductsListing

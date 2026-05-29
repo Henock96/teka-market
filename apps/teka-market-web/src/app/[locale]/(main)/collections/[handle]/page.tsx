@@ -5,10 +5,8 @@ import { AlgoliaProductsListing, ProductListing } from "@/components/sections"
 import { getCollectionByHandle } from "@/lib/data/collections"
 import { getRegion } from "@/lib/data/regions"
 import isBot from "@/lib/helpers/isBot"
+import { isSearchEnabled } from "@/lib/search-client"
 import { Suspense } from "react"
-
-const ALGOLIA_ID = process.env.NEXT_PUBLIC_ALGOLIA_ID
-const ALGOLIA_SEARCH_KEY = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
 
 const SingleCollectionsPage = async ({
   params,
@@ -40,7 +38,7 @@ const SingleCollectionsPage = async ({
       <h1 className="heading-xl uppercase">{collection.title}</h1>
 
       <Suspense fallback={<div data-testid="collection-page-loading"><ProductListingSkeleton /></div>}>
-        {bot || !ALGOLIA_ID || !ALGOLIA_SEARCH_KEY ? (
+        {bot || !isSearchEnabled ? (
           <ProductListing collection_id={collection.id} showSidebar />
         ) : (
           <AlgoliaProductsListing
