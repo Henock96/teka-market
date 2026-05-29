@@ -48,3 +48,6 @@ apps/teka-market-web/public/images/
 
 # Mercur codegen output (generated, not committed)
 .mercur/
+
+# Superpowers brainstorm visual companion (HTML + state)
+.superpowers/
